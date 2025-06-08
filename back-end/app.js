@@ -1,16 +1,32 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import bookRoutes from './routes/bookRoutes.js';
+import clientRouter from './routes/clientRoutes.js';
 
 const app = express();
 
-const paramCors = {
-    origin: 'localhost:3000',
-    methods: ['GET', 'POST', 'PUT'],
+const whitelist = [
+    'http://localhost',
+    'http://ejemplo.com' //Ejemplo de un dominio existente
+];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new error);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(paramCors));
+app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use('/api/books', bookRoutes);
+app.use('/api/client', clientRouter);
 
 app.get('/', (req, res) => {
     res.send('Entro a la API de prueba')
