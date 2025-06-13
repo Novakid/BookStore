@@ -3,7 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import bookRoutes from './routes/bookRoutes.js';
 import clientRouter from './routes/clientRoutes.js';
-import authotRouter from './routes/authorRoutes.js';
+import authorRouter from './routes/authorRoutes.js';
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use('/api/books', bookRoutes);
 app.use('/api/client', clientRouter);
-app.use('/api/author', authotRouter);
+app.use('/api/author', authorRouter);
 
 app.get('/', (req, res) => {
     res.send('Entro a la API de prueba')

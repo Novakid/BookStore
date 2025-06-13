@@ -21,3 +21,36 @@ export const createClient = async (req, resp) => {
         resp.status(500).json({ error: 'Error al crear' });
     }
 };
+
+export const updateClient = async (req, resp) => {
+    try {
+        console.log(req.body);
+        const { id, Nombre, direccion, telefono, email } = req.body;
+        const isUpdate = await client.edit(id, Nombre, direccion, telefono, email);
+        if (isUpdate) {
+            resp.status(200).json({ success: true, message: 'Cliente actualizado' });
+        } else {
+            resp.status(500).json({ error: 'Error al Editar' });
+        }
+    } catch (error) {
+        console.log(error)
+        resp.status(500).json({ error: 'Error al ingresar' });
+    }
+};
+
+export const deleteClient = async (req, resp) => {
+    try {
+        console.log(req.body);
+        const { id } = req.body;
+        const isDelete = await client.delete(id);
+
+        if (isDelete) {
+            resp.status(200).json({ success: true, message: 'Usuario Eliminado' });
+        } else {
+            resp.status(500).json({ error: 'Error al borrar' });
+        }
+    } catch (error) {
+        console.log(error)
+        resp.status(500).json({ error: 'Error al ingresar' });
+    }
+};

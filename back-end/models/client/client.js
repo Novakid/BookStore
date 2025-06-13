@@ -12,6 +12,20 @@ const client = {
         );
         return { id: result.insertId, Nombre, direccion, telefono, email };
     },
+    edit: async (id, Nombre, direccion, telefono, email) => {
+        const [result] = await pool.query(
+            'UPDATE cliente SET Nombre = ?, direccion = ?, telefono = ?, email = ?',
+            [id, Nombre, direccion, telefono, email]
+        );
+        return result.affectedRows > 0;
+    },
+    delete: async (id) => {
+        const [result] = await pool.query(
+            'DELETE FROM cliente WHERE id = ?',
+            [id]
+        );
+        return result.affectedRows > 0;
+    },
 };
 
 export default client;

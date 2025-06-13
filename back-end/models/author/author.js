@@ -12,6 +12,20 @@ const author = {
         );
         return { id: result.insertId, Nombre, Biografia };
     },
+    edit: async (id, Nombre, Biografia) => {
+        const [result] = await pool.query(
+            'UPDATE autor SET Nombre = ?, Biografia = ? WHERE id = ?',
+            [id, Nombre, Biografia]
+        );
+        return result.affectedRows > 0;
+    },
+    delete: async (id) => {
+        const [result] = await pool.query(
+            'DELETE FROM autor WHERE id = ?',
+            [id]
+        );
+        return result.affectedRows > 0;
+    },
 };
 
 export default author;
